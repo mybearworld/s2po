@@ -31,6 +31,7 @@ if (upload === null) {
 /** @param {string} name */
 const createRow = (name) => {
   const id = mainTableId(name);
+  const [title, pattern] = specialWordsValidation(name);
   const row = document.createElement("tr");
   const keyColumn = document.createElement("td");
   const keyLabel = document.createElement("label");
@@ -42,6 +43,8 @@ const createRow = (name) => {
   valueInput.placeholder = name;
   valueInput.dataset.name = name;
   valueInput.id = id;
+  valueInput.title = title;
+  valueInput.pattern = pattern;
   valueColumn.append(valueInput);
   row.append(keyColumn, valueColumn);
   return row;
@@ -56,6 +59,29 @@ const mainTableId = (name) => {
       .replace(/[^a-z0-9\-]+/g, (characters) => `-${characters.length}-`)
       .replace(/^-|-$/g, "")
   );
+};
+
+/**
+ * @param {string} name
+ * @returns {[string, string]}
+ */
+const specialWordsValidation = (name) => {
+  const specialWords = [...name.matchAll(/[%@]\S*/g)];
+  if (specialWords.length === 0) {
+    return ["", ""];
+  }
+  return [
+    specialWords.length === 1
+      ? `This string must include ${specialWords[0][0]}`
+      : `This string must include ${specialWords
+          .map((word) => word[0])
+          .join(", ")} in that order.`,
+    "^[^@%]*?" +
+      specialWords
+        .map((word) => word[0].replace(/\./, "\\."))
+        .join("\\s[^@%]+?\\s") +
+      "[^@%]*?$",
+  ];
 };
 
 messages.forEach((message) => {
