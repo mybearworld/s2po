@@ -110,19 +110,31 @@ upload.addEventListener("input", async () => {
   }
   const file = [...files][0];
   const text = await file.text();
-  let failed = 0;
+  upload.value = "";
+  /** @type {string[]} */
+  const failed = [];
   text.split("\n\n").forEach((line) => {
-    const msgid = line.split("\n")[0].slice(7, -1);
-    const msgstr = line.split("\n")[1].slice(8, -1);
+    const msgid = line.match(/^msgid "(.+?)"$/m)?.[1];
+    if (msgid === undefined) {
+      return;
+    }
+    const msgstr = line.match(/^msgstr "(.+?)"$/m)?.[1];
+    if (msgstr === undefined) {
+      return;
+    }
     /** @type {HTMLInputElement | null} */
     const element = document.querySelector(`#${mainTableId(msgid)}`);
     if (element === null) {
-      failed++;
+      failed.push(msgid);
       return;
     }
     element.value = msgstr;
   });
-  if (failed !== 0) {
-    alert(`Failed to recognize ${failed} key${failed === 1 ? "" : "s"}.`);
+  if (failed.length !== 0) {
+    alert(
+      `Failed to recognize ${failed.length} key${
+        failed.length === 1 ? "" : "s"
+      }:\n\n${failed.join("\n")}`
+    );
   }
 });
