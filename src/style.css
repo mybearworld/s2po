@@ -32,6 +32,10 @@ input {
   width: 100%;
 }
 
+#download-element {
+  display: none;
+}
+
 #main-table {
   border-spacing: 0.5rem;
 }
