@@ -37,6 +37,10 @@ input {
   width: 100%;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 #download-element,
 #upload-element {
   display: none;
