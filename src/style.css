@@ -1,5 +1,6 @@
 :root {
   --background-color: hsl(220, 20%, 10%);
+  --input-background-color: hsl(220, 20%, 15%);
 
   --font-family: system-ui;
   --font-color: hsl(220, 30%, 95%);
@@ -12,9 +13,32 @@
 }
 
 body {
+  margin: 1rem auto;
+  max-width: 70ch;
   background-color: var(--background-color);
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
   color: var(--font-color);
+}
+
+input {
+  font: inherit;
+  border: 0;
+  color: inherit;
+  background: var(--input-background-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  width: 100%;
+}
+
+#main-table {
+  border-spacing: 0.5rem;
+}
+
+#main-table td:first-child {
+  width: 50%;
+}
+#main-table td:last-child {
+  width: 50%;
 }
