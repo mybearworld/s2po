@@ -32,7 +32,8 @@ input {
   width: 100%;
 }
 
-#download-element {
+#download-element,
+#upload-element {
   display: none;
 }
 

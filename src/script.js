@@ -12,10 +12,20 @@ const mainForm = document.querySelector("#main-form");
 if (mainForm === null) {
   throw new Error("#main-form not found");
 }
+/** @type {HTMLButtonElement | null} */
+const loadButton = document.querySelector("#load-button");
+if (loadButton === null) {
+  throw new Error("#load-button not found");
+}
 /** @type {HTMLAnchorElement | null} */
 const download = document.querySelector("#download-element");
 if (download === null) {
   throw new Error("#download-element not found");
+}
+/** @type {HTMLInputElement | null} */
+const upload = document.querySelector("#upload-element");
+if (upload === null) {
+  throw new Error("#upload-element not found");
 }
 
 /** @param {string} name */
@@ -61,4 +71,32 @@ mainForm.addEventListener("submit", (e) => {
     .join("\n\n");
   download.href = `data:text/plain,${encodeURIComponent(file)}`;
   download.click();
+});
+
+loadButton.addEventListener("click", () => {
+  upload.click();
+});
+
+upload.addEventListener("input", async () => {
+  const files = upload.files;
+  if (files === null) {
+    return;
+  }
+  const file = [...files][0];
+  const text = await file.text();
+  let failed = 0;
+  text.split("\n\n").forEach((line) => {
+    const msgid = line.split("\n")[0].slice(7, -1);
+    const msgstr = line.split("\n")[1].slice(8, -1);
+    /** @type {HTMLInputElement | null} */
+    const element = document.querySelector(`#${mainTableId(msgid)}`);
+    if (element === null) {
+      failed++;
+      return;
+    }
+    element.value = msgstr;
+  });
+  if (failed !== 0) {
+    alert(`Failed to recognize ${failed} key${failed === 1 ? "" : "s"}.`);
+  }
 });
