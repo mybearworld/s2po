@@ -153,7 +153,6 @@ export const messages = [
   "x position",
   "y position",
   "Language-Name",
-  "%m.list contains %s",
   "go to %m.spriteOrMouse",
   "set motor direction %m.motorDirection",
   "set motor power %n",

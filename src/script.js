@@ -31,8 +31,8 @@ const mainTableId = (name) => {
   return (
     "main-table-field-" +
     name
-      .toLowerCase()
-      .replace(/[^a-z0-9\-]+/g, "-")
+      .replace(/[A-Z]/g, (letter) => `capital-${letter.toLowerCase()}`)
+      .replace(/[^a-z0-9\-]+/g, (characters) => `-${characters.length}-`)
       .replace(/^-|-$/g, "")
   );
 };
