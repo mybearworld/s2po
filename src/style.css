@@ -1,6 +1,7 @@
 :root {
   --background-color: hsl(220, 20%, 10%);
   --input-background-color: hsl(220, 20%, 15%);
+  --button-drop-shadow-color: hsl(220, 30%, 95%, 40%);
 
   --font-family: system-ui;
   --font-color: hsl(220, 30%, 95%);
@@ -22,13 +23,17 @@ body {
   color: var(--font-color);
 }
 
-input {
+input,
+button {
   font: inherit;
   border: 0;
   color: inherit;
   background: var(--input-background-color);
   padding: 0.25rem 0.5rem;
   border-radius: 1rem;
+}
+
+input {
   width: 100%;
 }
 
@@ -46,4 +51,16 @@ input {
 }
 #main-table td:last-child {
   width: 50%;
+}
+
+#main-form .buttons {
+  display: flex;
+  gap: 0.5rem;
+  position: sticky;
+  top: 1rem;
+}
+
+#main-form .buttons button {
+  width: 50%;
+  box-shadow: 0 1px 5px var(--button-drop-shadow-color);
 }
