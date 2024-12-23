@@ -89,14 +89,18 @@ messages.forEach((message) => {
 });
 
 mainForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const file = [...mainForm.querySelectorAll("input")]
-    .map((element) => {
-      return `msgid "${element.dataset.name}"\nmsgstr "${element.value}"`;
-    })
-    .join("\n\n");
-  download.href = `data:text/plain,${encodeURIComponent(file)}`;
-  download.click();
+  try {
+    e.preventDefault();
+    const file = [...mainForm.querySelectorAll("input")]
+      .map((element) => {
+        return `msgid "${element.dataset.name}"\nmsgstr "${element.value}"`;
+      })
+      .join("\n\n");
+    download.href = `data:text/plain,${encodeURIComponent(file)}`;
+    download.click();
+  } catch (e) {
+    alert("stack" in e ? e.stack : e);
+  }
 });
 
 loadButton.addEventListener("click", () => {
